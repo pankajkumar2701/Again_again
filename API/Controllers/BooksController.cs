@@ -50,7 +50,7 @@ namespace Again_again.Controllers
                 filterCriteria = JsonHelper.Deserialize<List<FilterCriteria>>(filters);
             }
 
-            var query = _context.Books.AsQueryable();
+            var query = _context.Books.IncludeRelated().AsQueryable();
             var result = FilterService<Books>.ApplyFilter(query, filterCriteria);
             return Ok(result);
         }
@@ -63,7 +63,7 @@ namespace Again_again.Controllers
         [UserAuthorize("Books",Entitlements.Read)]
         public IActionResult GetById([FromRoute] Guid id)
         {
-            var entityData = _context.Books.FirstOrDefault(entity => entity.Id == id);
+            var entityData = _context.Books.IncludeRelated().FirstOrDefault(entity => entity.Id == id);
             return Ok(entityData);
         }
 
@@ -75,7 +75,7 @@ namespace Again_again.Controllers
         [Route("{id:Guid}")]
         public IActionResult DeleteById([FromRoute] Guid id)
         {
-            var entityData = _context.Books.FirstOrDefault(entity => entity.Id == id);
+            var entityData = _context.Books.IncludeRelated().FirstOrDefault(entity => entity.Id == id);
             if (entityData == null)
             {
                 return NotFound();
@@ -100,7 +100,7 @@ namespace Again_again.Controllers
                 return BadRequest("Mismatched Id");
             }
 
-            var entityData = _context.Books.FirstOrDefault(entity => entity.Id == id);
+            var entityData = _context.Books.IncludeRelated().FirstOrDefault(entity => entity.Id == id);
             if (entityData == null)
             {
                 return NotFound();

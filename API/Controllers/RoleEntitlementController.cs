@@ -50,7 +50,7 @@ namespace Again_again.Controllers
                 filterCriteria = JsonHelper.Deserialize<List<FilterCriteria>>(filters);
             }
 
-            var query = _context.RoleEntitlement.AsQueryable();
+            var query = _context.RoleEntitlement.IncludeRelated().AsQueryable();
             var result = FilterService<RoleEntitlement>.ApplyFilter(query, filterCriteria);
             return Ok(result);
         }
@@ -63,7 +63,7 @@ namespace Again_again.Controllers
         [UserAuthorize("RoleEntitlement",Entitlements.Read)]
         public IActionResult GetById([FromRoute] Guid id)
         {
-            var entityData = _context.RoleEntitlement.FirstOrDefault(entity => entity.Id == id);
+            var entityData = _context.RoleEntitlement.IncludeRelated().FirstOrDefault(entity => entity.Id == id);
             return Ok(entityData);
         }
 
@@ -75,7 +75,7 @@ namespace Again_again.Controllers
         [Route("{id:Guid}")]
         public IActionResult DeleteById([FromRoute] Guid id)
         {
-            var entityData = _context.RoleEntitlement.FirstOrDefault(entity => entity.Id == id);
+            var entityData = _context.RoleEntitlement.IncludeRelated().FirstOrDefault(entity => entity.Id == id);
             if (entityData == null)
             {
                 return NotFound();
@@ -100,7 +100,7 @@ namespace Again_again.Controllers
                 return BadRequest("Mismatched Id");
             }
 
-            var entityData = _context.RoleEntitlement.FirstOrDefault(entity => entity.Id == id);
+            var entityData = _context.RoleEntitlement.IncludeRelated().FirstOrDefault(entity => entity.Id == id);
             if (entityData == null)
             {
                 return NotFound();

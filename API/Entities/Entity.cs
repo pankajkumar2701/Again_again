@@ -63,6 +63,6 @@ namespace Again_again.Entities
         /// <summary>
         /// Collection navigation property representing associated 
         /// </summary>
-        public ICollection<RoleEntitlement>? RoleEntitlements { get; set; }
+        public ICollection<RoleEntitlement>? RoleEntitlement { get; set; }
     }
 }

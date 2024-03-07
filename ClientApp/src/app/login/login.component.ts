@@ -5,6 +5,7 @@ import { LoginInfoPayload } from './login-info-payload';
 import { Subject, first, takeUntil } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { TokenService } from '../angular-app-services/token.service';
+import { AppConfigService } from '../app-config.service';
 
 
 @Component({
@@ -16,6 +17,8 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   private formSubmitAttempt: boolean = false;
   protected destroy$ = new Subject();
+  hide = true;
+  tenantTitle: string = '';
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -29,6 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tenantTitle = AppConfigService.appConfig.app.title;
     this.form = this.fb.group({
       userName: ['', Validators.required],
       password: ['', Validators.required]

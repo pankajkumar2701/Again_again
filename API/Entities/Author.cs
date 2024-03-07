@@ -43,6 +43,6 @@ namespace Again_again.Entities
         /// <summary>
         /// Collection navigation property representing associated 
         /// </summary>
-        public ICollection<Books>? Bookss { get; set; }
+        public ICollection<Books>? Books { get; set; }
     }
 }

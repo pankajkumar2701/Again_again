@@ -11,7 +11,10 @@
         "appInsights": false
     },
     "api": {
-        "url": "https://ntlowcodeapi.azurewebsites.net"
+        "url": "https://asa.azurewebsites.net"
+    },
+    "app": {
+        "title": "Again_again"
     },
     "buildInfo": {
         "number": "1.0.0.0",
