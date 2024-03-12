@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoaderService } from '../angular-app-services/loader.service';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+
+  constructor(
+    protected loaderService: LoaderService
+  ) { }
 
 }

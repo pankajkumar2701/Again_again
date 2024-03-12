@@ -38,7 +38,7 @@ namespace Again_again.Controllers
         }
 
         /// <summary>Retrieves a list of users based on specified filters</summary>
-        /// <param name="filters">The filter criteria in JSON format. Use the following format: [{"Property": "PropertyName", "Operator": "Equal", "Value": "FilterValue"}] </param>
+        /// <param name="filters">The filter criteria in JSON format. Use the following format: [{"PropertyName": "PropertyName", "Operator": "Equal", "Value": "FilterValue"}] </param>
         /// <returns>The filtered list of users</returns>
         [HttpGet]
         [UserAuthorize("User",Entitlements.Read)]

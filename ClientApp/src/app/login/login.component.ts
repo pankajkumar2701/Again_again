@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginInfoPayload } from './login-info-payload';
-import { Subject, first, takeUntil } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from '../angular-app-services/auth.service';
 import { TokenService } from '../angular-app-services/token.service';
 import { AppConfigService } from '../app-config.service';
+import { SweetAlertService } from '../angular-app-services/sweet-alert.service';
+import { LoaderService } from '../angular-app-services/loader.service';
 
 
 @Component({
@@ -25,6 +27,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private tokenService: TokenService,
+    private sweetAlertService: SweetAlertService,
+    protected loaderService: LoaderService
   ) {
     if (!this.tokenService.isAuthTokenExpired()) {
       this.navigateTo();
@@ -53,11 +57,14 @@ export class LoginComponent implements OnInit {
         password: this.form.value.password
       };
       this.authService.login(loginDetail)
-        .pipe(first(), takeUntil(this.destroy$))
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (token: any) => {
             this.tokenService.setToken(token);
             this.navigateTo();
+          },
+          error: () => {
+            this.sweetAlertService.showError('Invalid username or password');
           }
         });
     }

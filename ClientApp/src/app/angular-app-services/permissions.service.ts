@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, catchError, of, switchMap } from 'rxjs';
 import { TokenService } from './token.service';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class PermissionsService {
@@ -22,6 +22,7 @@ export class PermissionsService {
     }
     // Token expired
     if (this.tokenService.isRefreshTokenExpired()) {
+      this.tokenService.logout();
       this.router.navigate(['login'], { queryParams: { returnUrl: url } });
       return of(false);
     } else if (this.tokenService.getRefreshToken() && !this.tokenService.tokenGettingRefreshed) {
@@ -39,11 +40,13 @@ export class PermissionsService {
         }),
         catchError(() => {
           this.tokenService.tokenGettingRefreshed = false;
+          this.tokenService.logout();
           this.router.navigate(['login'], { queryParams: { returnUrl: url } });
           return of(false);
         })
       );
     }
+    this.tokenService.logout();
     this.router.navigate(['login'], { queryParams: { returnUrl: url } });
     return of(false);
   }

@@ -1178,3 +1178,29 @@
   background: transparent;
   border: none;
 }
+
+.swal2-actions {
+  float: left;
+
+  .sweet-alert-confirm-button {
+    background-color: var(--primary-color) !important;
+    font-weight: 500;
+    font-size: 15px !important;
+    line-height: 25px;
+    color: var(--main-bg) !important;
+    padding: var(--ec-button-padding);
+    border: none;
+    border-radius: 6px !important;
+  }
+
+  .sweet-alert-cancel-button {
+    color: var(--color-3) !important;
+    background: transparent !important;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    padding: var(--ec-button-padding);
+    border: none;
+    border-radius: 6px;
+  }
+}

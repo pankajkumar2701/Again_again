@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Again_again.Models;
 using Again_again.Services;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -69,10 +69,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     };
 });
 builder.Services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
-builder.Services.AddControllers().AddJsonOptions(options =>
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    // Configure Newtonsoft.Json settings here
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 });
 //Inject context
 builder.Services.AddTransient<Again_againContext>();

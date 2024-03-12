@@ -11,6 +11,15 @@ namespace Again_again.Entities
     public class Author
     {
         /// <summary>
+        /// Initializes a new instance of the Author class.
+        /// </summary>
+        public Author()
+        {
+            UpdatedOn = "2020-02-31T00:00:00.000Z";
+            TravelDate = "2020-10-30";
+        }
+
+        /// <summary>
         /// Primary key for the Author 
         /// </summary>
         [Key]
@@ -40,6 +49,16 @@ namespace Again_again.Entities
         /// UpdatedBy of the Author 
         /// </summary>
         public Guid? UpdatedBy { get; set; }
+
+        /// <summary>
+        /// Required field TravelDate of the Author 
+        /// </summary>
+        [Required]
+        public Date TravelDate { get; set; }
+        /// <summary>
+        /// ReturnDate of the Author 
+        /// </summary>
+        public Date? ReturnDate { get; set; }
         /// <summary>
         /// Collection navigation property representing associated 
         /// </summary>

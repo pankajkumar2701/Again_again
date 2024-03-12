@@ -1,39 +1,42 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { MenuService } from 'src/app/angular-app-services/menu.service';
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit, OnDestroy {
   isSidebarToggled = true;
- 
-  constructor(private router: Router) { }
+  menuData: any;
 
-  ngOnInit() {
+  private destroy = new Subject();
 
+  constructor(
+    private menuService: MenuService
+  ) { }
+
+  ngOnInit(): void {
+    this.menuService.getMenu()
+      .pipe(takeUntil(this.destroy))
+      .subscribe(data => {
+        this.menuData = data;
+      });
   }
 
-  toggleSidebar() {
-    this.isSidebarToggled = !this.isSidebarToggled;
+  ngOnDestroy(): void {
+    this.destroy.next(true);
+    this.destroy.complete();
   }
 
-  toggleSubMenu(event: MouseEvent) {
-    const target = event.currentTarget as HTMLElement;
-    const submenu = target.nextElementSibling as HTMLElement;
+  showSubMenu(event: MouseEvent): void {
+    const targetAttr = (event.target as HTMLElement);
+    const subMenuItem = (targetAttr.querySelector('.sub-nav-link') as HTMLElement);
 
-    if (submenu.style.display === 'block') {
-      submenu.style.display = 'none';
-      target.parentElement?.classList.remove('active');
-    } else {
-      submenu.style.display = 'block';
-      target.parentElement?.classList.add('active');
+    if (subMenuItem) {
+      subMenuItem.style.top = targetAttr.getBoundingClientRect().top + 'px';
+      subMenuItem.style.left = targetAttr.getBoundingClientRect().width - 2 + 'px';
     }
   }
-
-  navigateTo(route: string) {
-    this.router.navigate(['/dashboard']);
-  }
-
 }
