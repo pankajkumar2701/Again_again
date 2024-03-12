@@ -15,7 +15,7 @@ namespace Again_again.Entities
         /// </summary>
         public Author()
         {
-            UpdatedOn = "2020-02-31T00:00:00.000Z";
+            UpdatedOn = "2020-03-31T00:00:00.000Z";
             TravelDate = "2020-10-30";
         }
 
